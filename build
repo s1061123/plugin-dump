@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+set -e
+
+DEST_DIR="bin"
+
+if [ ! -d ${DEST_DIR} ]; then
+	mkdir ${DEST_DIR}
+fi
+
+export CGO_ENABLED=0
+
+# build with go modules
+export GO111MODULE=on
+echo "Building plugins"
+go build -o ${DEST_DIR}/dump -tags no_openssl -ldflags "${LDFLAGS}" "$@" ./cmd/dump
